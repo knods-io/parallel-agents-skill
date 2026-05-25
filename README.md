@@ -39,19 +39,17 @@ The core idea:
 
 ## How to use this
 
-**Do not copy-paste this skill verbatim into your project.** Your stack, your branching model, your test tooling, and your deployment flow are different from the project this was born in. Instead:
+**Do not copy-paste this skill verbatim into your project.** Your stack, your branching model, your test tooling, and your deployment flow are different from the project this was born in.
 
-### 1. Read the skill
+### 1. Paste this to your LLM
 
-Read [`SKILL.md`](SKILL.md) end to end. Understand the flow, the roles, the anti-patterns, and the philosophy.
+Open a conversation with your AI coding assistant and paste this:
 
-### 2. Ask your LLM to adapt it
+> Read the SKILL.md file from https://github.com/knods-io/parallel-agents-skill and adapt it to our project. We use [your stack]. Our branching model is [your branches]. Our tests run with [your test runner]. Our deploy target is [your deploy]. Keep the mythological worker names and the core flow (parallel workers, Themis validation, Apollo smoke test, staging, human gate, main), but tailor every detail to how we actually work. Then install it as a skill in this project.
 
-Open a conversation with your AI coding assistant and ask it to implement this pattern for **your** project. For example:
+That's it. Your LLM will read the skill, understand your project, and create a version that fits.
 
-> "Read this skill definition and adapt it to our project. We use [your stack]. Our branching model is [your branches]. Our tests run with [your test runner]. Our deploy target is [your deploy]. Keep the mythological worker names and the core flow (parallel workers → Themis validation → Apollo smoke test → staging → human gate → main), but tailor every detail to how we actually work."
-
-### 3. What to customize
+### 2. What to customize
 
 | Aspect | What to tailor |
 |---|---|
@@ -62,7 +60,7 @@ Open a conversation with your AI coding assistant and ask it to implement this p
 | **Deployment** | The skill pushes to `staging` via git. Adapt if you deploy via CI/CD pipelines, Docker, Vercel, etc. |
 | **Agent spawning** | The skill uses Claude Code's `Agent` tool with `isolation: "worktree"`. Adapt the spawning mechanism to your LLM's capabilities |
 
-### 4. Install it
+### 3. Where it goes
 
 Where you place the adapted skill depends on your tool:
 
