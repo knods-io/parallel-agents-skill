@@ -102,6 +102,21 @@ The skill is plain Markdown with YAML frontmatter. Any LLM that reads Markdown c
 
 Scale the implementer count to match your batch size. Themis and Apollo always run.
 
+## How this differs from existing tools
+
+There are excellent tools for running AI agents in parallel. This skill covers a different layer.
+
+| Tool | What it does | What it doesn't do |
+|---|---|---|
+| [parallel-code](https://github.com/johannesjo/parallel-code) | Electron app that runs Claude/Codex/Gemini side-by-side in worktrees | No integration validation, no smoke testing, no staging gate |
+| [claude-parallel-agents](https://github.com/sean-rowe/claude-parallel-agents) | Launches multiple Claude Code instances with state tracking and auto-restart | No merge validation, no runtime testing, no human-gated promotion |
+| Claude Code `/batch` | Built-in command that spawns worktree-isolated agents for parallel migrations | Each agent creates its own PR — no integration branch, no unified validation |
+| **This skill** | The full delivery ceremony after the parallel work is done | Not a runtime or launcher — it's the pipeline definition |
+
+The existing tools solve **"how do I run multiple agents at once without file conflicts?"** This skill solves **"how do I safely merge, validate, test, and ship what those agents produced — with a human as the final gate?"**
+
+The pipeline: parallel workers → integration merge (`--no-ff`) → type/build validation (Themis) → runtime smoke tests (Apollo) → staging promotion → human authorization → production merge, with feature-level rollback via `git revert -m 1`. That's the part nobody else has published as a portable, LLM-agnostic skill.
+
 ## Key principles
 
 - **Isolation is non-negotiable.** Workers must not share a working directory. Git worktrees, separate clones, or containers — pick one, but don't skip it.
